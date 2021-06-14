@@ -31,7 +31,7 @@ const listContacts = async (userId, query) => {
 
 const getContactById = async (userId, contactId) => {
   try {
-    const result = await Contact.find({
+    const result = await Contact.findOne({
       _id: contactId,
       owner: userId,
     }).populate({ path: "owner", select: " email subscription -_id " });
@@ -91,7 +91,7 @@ const updateContact = async (userId, contactId, body) => {
   }
 };
 
-const updateStatusContact = async (contactId, body) => {
+const updateStatusContact = async (contactId, body,userId) => {
   try {
     if (contactId && body) {
       const result = await Contact.findByIdAndUpdate(

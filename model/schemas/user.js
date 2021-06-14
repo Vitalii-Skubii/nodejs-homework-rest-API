@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const { Subscription } = require("../../helpers/constants");
 const bcrypt = require("bcryptjs");
+const gravatar = require("gravatar");
 const SALT_FACTOR = 6;
 const userSchema = new Schema(
   {
@@ -18,6 +19,12 @@ const userSchema = new Schema(
         return regular.test(String(value).toLowerCase());
       },
     },
+     avatar: {
+    type: String,
+    default: function () {
+      return gravatar.url(this.email, { s: "250" }, true);
+    },
+  },
     subscription: {
       type: String,
       enum: [Subscription.STARTER, Subscription.PRO, Subscription.BUSINESS],

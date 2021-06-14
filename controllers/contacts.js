@@ -43,7 +43,7 @@ const addContact = async (req, res, next) => {
     const contact = await Contacts.addContact({ ...req.body, owner: userId });
     return res
       .status(HttpCode.CREATED)
-      .json({ status: "success", code: HttpCode.CREATED, data: { contact } });
+      .json({ status: "success", code: HttpCode.CREATED, data:  contact  });
   } catch (error) {
     if (error.name === "ValidationError") {
       error.status = HttpCode.BAD_REQUEST;
@@ -83,7 +83,7 @@ const updateContact = async (req, res, next) => {
     if (contact) {
       return res
         .status(HttpCode.OK)
-        .json({ status: "success", code: HttpCode.OK, data: { contact } });
+        .json({ status: "success", code: HttpCode.OK, data:  contact  });
     }
     return res.status(HttpCode.NOT_FOUND).json({
       status: "error",
