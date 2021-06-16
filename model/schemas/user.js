@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const { Subscription } = require("../../helpers/constants");
 const bcrypt = require("bcryptjs");
+const { v4: uuidv4 } = require("uuid");
 const gravatar = require("gravatar");
 const SALT_FACTOR = 6;
 const userSchema = new Schema(
@@ -19,12 +20,12 @@ const userSchema = new Schema(
         return regular.test(String(value).toLowerCase());
       },
     },
-     avatar: {
-    type: String,
-    default: function () {
-      return gravatar.url(this.email, { s: "250" }, true);
+    avatar: {
+      type: String,
+      default: function () {
+        return gravatar.url(this.email, { s: "250" }, true);
+      },
     },
-  },
     subscription: {
       type: String,
       enum: [Subscription.STARTER, Subscription.PRO, Subscription.BUSINESS],
@@ -33,6 +34,16 @@ const userSchema = new Schema(
     token: {
       type: String,
       default: null,
+    },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+
+    verifyToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+      default: uuidv4(),
     },
   },
 

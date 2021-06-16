@@ -5,6 +5,7 @@ const guard = require("../../../helpers/guard");
 const {
   validateAddContact,
   validateUpdateContact,
+  validateUpdateStatusContact,
   // validateRemoveContact,
   // validateGetByIdContact,
 } = require("./validation");
@@ -24,6 +25,11 @@ router.put(
   controllers.updateContact
 );
 
-router.patch("/:contactId/favorite", guard, controllers.updateContact);
+router.patch(
+  "/:contactId/favorite",
+  guard,
+  validateUpdateStatusContact,
+  controllers.updateContact
+);
 
 module.exports = router;
